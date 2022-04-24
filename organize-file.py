@@ -7,7 +7,7 @@ import glob
 from pathlib import Path
 from pathlib import Path
 
-sourceFolder = r"E:\Tang\pic\hakonePhoto"
+sourceFolder = r"E:\pic\"
 destinationFolder = r"D:\PicDT"
 
  # Get file list
@@ -15,8 +15,8 @@ files = glob.glob(sourceFolder + r'\**\*.*', recursive=True)
 count = 1;
 for filename in files:
     if Path((filename)).is_file():
-        #Get file modified date 
-        created = (os.path.getmtime(filename))
+        #Get file minimum date of modified date or create date 
+        created = min(os.path.getmtime(filename), os.path.getctime(filename))
         createYmd = datetime.fromtimestamp(created).strftime("%Y-%m-%d")
         #Create destination folder if not exists 
         if not os.path.exists(os.path.join(destinationFolder, createYmd)):
